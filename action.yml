@@ -1,0 +1,10 @@
+name: 'Setup nFPM'
+description: 'Install nFPM CLI'
+author: 'Linden Lab'
+inputs:
+  version:
+    description: 'nFPM CLI version'
+    default: '2.11.0'
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
