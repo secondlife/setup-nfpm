@@ -4,7 +4,7 @@ author: 'Linden Lab'
 inputs:
   version:
     description: 'nFPM CLI version'
-    default: '2.11.0'
+    default: '2.31.0'
 runs:
   using: 'node12'
   main: 'dist/index.js'
