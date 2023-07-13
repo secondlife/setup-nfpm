@@ -1,0 +1,10 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  tag:
+    name: Tag
+    uses: secondlife/update-major-tag-workflow/.github/workflows/update-major-tag.yaml@v1
