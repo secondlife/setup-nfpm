@@ -2,7 +2,7 @@
   <a href="https://github.com/secondlife/setup-nvpm/actions"><img alt="typescript-action status" src="https://github.com/secondlife/setup-nfpm/workflows/build-test/badge.svg"></a>
 </p>
 
-# Setup nFPM CLI 
+# Setup nFPM CLI
 
 This GitHub Action downloads and installs the [nFPM][] CLI so that you can use it
 with your workflows.

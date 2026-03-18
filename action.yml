@@ -1,10 +1,12 @@
-name: 'Setup nFPM'
-description: 'Install nFPM CLI'
-author: 'Linden Lab'
+name: Setup nFPM
+description: Install nFPM CLI
+author: Linden Lab
+
 inputs:
   version:
     description: 'nFPM CLI version'
     default: '2.33.1'
+
 runs:
-  using: 'node20'
-  main: 'dist/index.js'
+  using: node24
+  main: dist/index.js
