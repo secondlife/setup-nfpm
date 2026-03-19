@@ -1,3 +1,7 @@
+.DS_Store
+.licenses/
 dist/
-lib/
 node_modules/
+coverage/
+CONDUCT.md
+CONTRIBUTING.md

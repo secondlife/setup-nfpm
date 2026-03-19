@@ -1,7 +1,7 @@
 import * as core from '@actions/core'
 import * as path from 'path'
 import * as tc from '@actions/tool-cache'
-import * as util from './util'
+import * as util from './util.js'
 
 const TOOL = 'nfpm'
 
@@ -35,7 +35,12 @@ async function setupCli(version: string): Promise<string> {
   return downloadedPath
 }
 
-async function run(): Promise<void> {
+/**
+ * The main function for the action.
+ *
+ * @returns Resolves when the action is complete.
+ */
+export async function run(): Promise<void> {
   try {
     core.startGroup('Setup nFPM CLI')
     const version = core.getInput('version')
@@ -50,5 +55,3 @@ async function run(): Promise<void> {
     core.endGroup()
   }
 }
-
-run()

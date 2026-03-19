@@ -1,9 +1,19 @@
-import {describe, expect, test} from '@jest/globals'
-import {JsonWebKeyInput} from 'crypto'
-import * as util from '../src/util'
+/**
+ * Unit tests for the action's main functionality, src/main.ts
+ *
+ * To mock dependencies in ESM, you can create fixtures that export mock
+ * functions and objects. For example, the core module is mocked in this test,
+ * so that the actual '@actions/core' module is not imported.
+ */
+import {describe, expect, jest, test} from '@jest/globals'
+import * as os from '../__fixtures__/os.js'
 
-jest.mock('os')
-import os from 'os'
+// Mocks should be declared before the module being tested is imported.
+jest.unstable_mockModule('os', () => os)
+
+// The module being tested should be imported dynamically. This ensures that the
+// mocks are used in place of any actual dependencies.
+const {downloadUrl} = await import('../src/util')
 
 describe('downloadUrl', () => {
   const cases = [
@@ -30,9 +40,9 @@ describe('downloadUrl', () => {
   ]
 
   test.each(cases)('URL for %s-%s', (platform, arch, expected) => {
-    os.platform = jest.fn().mockImplementation(() => platform)
-    os.arch = jest.fn().mockImplementation(() => arch)
-    const got = util.downloadUrl('2.10.0')
+    os.platform.mockImplementation(() => platform)
+    os.arch.mockImplementation(() => arch)
+    const got = downloadUrl('2.10.0')
     expect(got).toBe(expected)
   })
 })
