@@ -4,9 +4,39 @@ author: Linden Lab
 
 inputs:
   version:
-    description: 'nFPM CLI version'
+    description: nFPM CLI version to install
     default: '2.45.2'
+outputs:
+  version:
+    description: nFPM CLI version that we installed
+    value: ${{ inputs.version }}
 
 runs:
-  using: node24
-  main: dist/index.js
+  using: composite
+  steps:
+    - name: Check the tool cache path
+      id: check-tool-cache
+      env:
+        NFPM_VERSION: ${{ inputs.version }}
+      run: |
+        "$GITHUB_ACTION_PATH"/bin/check-tool-cache.sh "$NFPM_VERSION"
+      shell: bash
+
+    - name: Select download
+      id: select-download
+      if: '! steps.check-tool-cache.outputs.tool-cache-hit'
+      env:
+        NFPM_VERSION: ${{ inputs.version }}
+      run: |
+        "$GITHUB_ACTION_PATH"/bin/select-download.sh "$NFPM_VERSION"
+      shell: bash
+
+    - name: Download to tool cache
+      if: '! steps.check-tool-cache.outputs.tool-cache-hit'
+      env:
+        tool_cache_path: ${{ steps.check-tool-cache.outputs.tool-cache-path }}
+        download_url: ${{ steps.select-download.outputs.download-url }}
+      working-directory: ${{ runner.temp }}
+      run: |
+        "$GITHUB_ACTION_PATH"/bin/install.sh "$download_url" "$tool_cache_path"
+      shell: bash

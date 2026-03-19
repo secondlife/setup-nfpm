@@ -13,7 +13,7 @@ Basic:
 ```yaml
 steps:
   - uses: actions/checkout@v6
-  - uses: secondlife/setup-nfpm@v4
+  - uses: secondlife/setup-nfpm@v5
     with:
       version: 2.33.1  # Optional version
   - run: |
