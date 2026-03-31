@@ -5,7 +5,7 @@ author: Linden Lab
 inputs:
   version:
     description: 'nFPM CLI version'
-    default: '2.33.1'
+    default: '2.45.2'
 
 runs:
   using: node24
