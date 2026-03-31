@@ -2,19 +2,6 @@
 
 Thanks for your interest in contributing!
 
-## Developing
-
-Be sure to not commit anything from `node_modules/*`. This repository uses
-[ncc][] to concat action code and dependencies into a single index.js file.
-
-Normal workflow:
-```
-npm install
-# ...make changes
-npm run all
-# ...commit, create PRs, live, love, laugh
-```
-
 ## Maintainer Instructions
 
 A `.github/release.yml` configuration file is provided to drive automatic
@@ -33,4 +20,3 @@ release notes line items:
 Be sure to add these to PRs order to autopopulate release notes!
 
 [automatic-releases]: https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes
-[ncc]: https://github.com/vercel/ncc

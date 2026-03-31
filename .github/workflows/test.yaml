@@ -1,0 +1,71 @@
+name: Run tests
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test-action:
+    name: Test Action on ${{ matrix.osname }}${{ matrix.arg }}
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      # Finish tests on all targets even once one of them fails.
+      fail-fast: false
+      matrix:
+        id: [with-version, '']
+        runner: [macos-latest, ubuntu-latest, windows-latest]
+        include:
+          - id: with-version
+            arg: ' with version'
+          - runner: macos-latest
+            osname: macOS
+          - runner: ubuntu-latest
+            osname: Linux
+          - runner: windows-latest
+            osname: Windows
+
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v6
+
+      - name: Check nFPM is not yet installed
+        run: |
+          set -euxo pipefail
+
+          if command -v nfpm; then
+            echo "nfpm appears to already be installed, so we can't test installing it." >&2
+            exit 1
+          fi
+        shell: bash
+
+      - name: Test Local Action
+        id: test-action
+        if: matrix.id != 'with-version'
+        uses: ./
+
+      - name: Test Local Action With Version
+        id: test-action-with-version
+        if: matrix.id == 'with-version'
+        uses: ./
+        with:
+          version: 2.9.2
+
+      - name: Test nFPM executable
+        env:
+          NFPM_INSTALLED_VERSION: ${{ steps.test-action.outputs.version || steps.test-action-with-version.outputs.version }}
+        run: |
+          set -euxo pipefail
+
+          nfpm --version | tee output.txt
+
+          if ! grep -q "$NFPM_INSTALLED_VERSION" output.txt; then
+            echo "nfpm --version output did not include $NFPM_INSTALLED_VERSION, the version we thought we installed." >&2
+            exit 1
+          fi
+        shell: bash

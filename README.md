@@ -1,11 +1,10 @@
-<p align="center">
-  <a href="https://github.com/secondlife/setup-nvpm/actions"><img alt="typescript-action status" src="https://github.com/secondlife/setup-nfpm/workflows/build-test/badge.svg"></a>
-</p>
+# Setup nFPM
 
-# Setup nFPM CLI
-
-This GitHub Action downloads and installs the [nFPM][] CLI so that you can use it
+This GitHub Action downloads and installs the [nFPM] tool so that you can use it
 with your workflows.
+
+[nFPM]: https://nfpm.goreleaser.com/
+
 
 # Usage
 
@@ -13,14 +12,12 @@ Basic:
 
 ```yaml
 steps:
-  - uses: actions/checkout@v2
-  - uses: secondlife/setup-nfpm@v1
+  - uses: actions/checkout@v6
+  - uses: secondlife/setup-nfpm@v5
     with:
-      version: 2.10.0 # Optional version
+      version: 2.33.1  # Optional version
   - run: |
       nfpm pkg --packager deb --target dist/
 ```
 
-For additional information on how to use nFPM see [https://nfpm.goreleaser.com/]()
-
-[nFPM]: https://github.com/goreleaser/nfpm
+For additional information on how to use nFPM see https://nfpm.goreleaser.com/ .
